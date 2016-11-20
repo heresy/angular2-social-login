@@ -12,9 +12,23 @@
     "@angular/http": "~2.1.2",
     "rxjs": "5.0.0-beta.12"
   },
+  "devDependencies": {
+    "@angular/common": "~2.1.2",
+    "@angular/platform-browser": "~2.1.2",
+    "@types/core-js": "^0.9.34",
+    "typescript": "^2.0.6",
+    "zone.js": "^0.6.25"
+  },
   "contributors": [
-    {"name": "Srinivas K", "email": "kpsrinivas@heresy.in"},
-    {"name": "Jayaram Kurapati", "url": "https://www.jayaramk.in", "email": "reachme@jayaramk.in"}
+    {
+      "name": "Srinivas K",
+      "email": "kpsrinivas@heresy.in"
+    },
+    {
+      "name": "Jayaram Kurapati",
+      "url": "https://www.jayaramk.in",
+      "email": "reachme@jayaramk.in"
+    }
   ],
   "author": "Heresy Infotech Private Limited",
   "license": "ISC"
