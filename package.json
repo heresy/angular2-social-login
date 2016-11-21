@@ -1,6 +1,6 @@
 {
   "name": "angular2-social-login",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Simple client side social authentication for Angular2 application.",
   "main": "./lib/index.js",
   "typings": "./lib/index.d.ts",
@@ -19,6 +19,12 @@
     "typescript": "^2.0.6",
     "zone.js": "^0.6.25"
   },
+  "keywords": [
+    "angular2",
+    "authentication",
+    "social login",
+    "angular2 social login"
+  ],
   "contributors": [
     {
       "name": "Srinivas K",
