@@ -1,6 +1,6 @@
 {
   "name": "angular2-social-login",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Simple client side social authentication for Angular2 application.",
   "main": "./lib/index.js",
   "typings": "./lib/index.d.ts",
@@ -8,16 +8,16 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "@angular/core": "~2.1.2",
-    "@angular/http": "~2.1.2",
-    "rxjs": "5.0.0-beta.12"
+    "@angular/core": "~2.4.0",
+    "@angular/http": "~2.4.0",
+    "rxjs": "5.0.1"
   },
   "devDependencies": {
-    "@angular/common": "~2.1.2",
-    "@angular/platform-browser": "~2.1.2",
+    "@angular/common": "~2.4.0",
+    "@angular/platform-browser": "~2.4.0",
     "@types/core-js": "^0.9.34",
     "typescript": "^2.0.6",
-    "zone.js": "^0.6.25"
+    "zone.js": "^0.7.4"
   },
   "keywords": [
     "angular2",
