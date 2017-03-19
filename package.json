@@ -1,6 +1,6 @@
 {
   "name": "angular2-social-login",
-  "version": "2.0.2",
+  "version": "2.1.0",
   "description": "Simple client side social authentication for Angular2 application.",
   "main": "./lib/index.js",
   "typings": "./lib/index.d.ts",

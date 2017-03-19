@@ -11,4 +11,5 @@ export declare class AuthService {
     gauth: any;
     login(provider: string): Observable<Object>;
     logout(): Observable<boolean>;
+    private _fetchGoogleUserDetails();
 }

@@ -35,7 +35,7 @@ let providers = {
     },
     "facebook": {
       "clientId": "FACEBOOK_CLIENT_ID",
-      "apiVersion": "v2.4"
+      "apiVersion": "<version>" //like v2.4
     }
   };
 
@@ -68,7 +68,7 @@ export class AppComponent implements OnDestroy {
     this.sub = this._auth.login(provider).subscribe(
       (data) => {
                   //user data
-                  //name, image, uid, provider, uid, email
+                  //name, image, uid, provider, uid, email, token (returns tokenId for google, accessToken for Facebook, no token for linkedIn)
                 }
     )
   }

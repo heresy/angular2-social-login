@@ -26,42 +26,69 @@ export class AuthService {
                                     if (typeof(this.gauth) == "undefined"){
                                         this.gauth = gapi.auth2.getAuthInstance();
                                     }
-                                    this.gauth.signIn().then(() => {
-                                        let profile = this.gauth.currentUser.get().getBasicProfile();
-                                        let idToken = this.gauth.currentUser.get().getAuthResponse().id_token
-                                        let userDetails = {
-                                            token: idToken,
-                                            uid: profile.getId(),
-                                            name: profile.getName(),
-                                            email: profile.getEmail(),
-                                            image: profile.getImageUrl(),
-                                            provider: "google"
-                                        };
+                                    if(!this.gauth.isSignedIn.get()){
+                                        this.gauth.signIn().then(() => {
+                                            localStorage.setItem('_login_provider', 'google');
+                                            observer.next(this._fetchGoogleUserDetails());
+                                            observer.complete();
+                                        });
+                                    }else{
                                         localStorage.setItem('_login_provider', 'google');
-                                        observer.next(userDetails);
+                                        observer.next(this._fetchGoogleUserDetails());
                                         observer.complete();
-                                    })
+                                    }
+                                    
                                     break;
                     case "facebook":
-                                    FB.login(function(res){
-                                        if(res.status == "connected"){
-                                            FB.api('/me?fields=name,email,picture', function(res){
-                                            if(!res || res.error){
-                                                observer.error(res.error);
-                                            }else{
-                                                let userDetails = {name: res.name, email: res.email, uid: res.id, provider: "facebook", imageUrl: res.picture.data.url}
-                                                localStorage.setItem('_login_provider', 'facebook');
-                                                observer.next(userDetails);
-                                                observer.complete();
-                                            }
+                                    FB.getLoginStatus((response) => {
+                                        if(response.status === "connected"){
+                                            FB.api('/me?fields=name,email,picture', (res) => {
+                                                if(!res || res.error){
+                                                    observer.error(res.error);
+                                                }else{
+                                                    let userDetails = {
+                                                        name: res.name, 
+                                                        email: res.email, 
+                                                        uid: res.id, 
+                                                        provider: "facebook", 
+                                                        image: res.picture.data.url,
+                                                        token: response.authResponse.accessToken
+                                                    }
+                                                    localStorage.setItem('_login_provider', 'facebook');
+                                                    observer.next(userDetails);
+                                                    observer.complete();
+                                                }
                                             });
+                                        }
+                                        else{
+                                            FB.login((response) => {
+                                                if(response.status === "connected"){
+                                                    FB.api('/me?fields=name,email,picture', (res) => {
+                                                        if(!res || res.error){
+                                                            observer.error(res.error);
+                                                        }else{
+                                                            let userDetails = {
+                                                                name: res.name, 
+                                                                email: res.email, 
+                                                                uid: res.id, 
+                                                                provider: "facebook", 
+                                                                image: res.picture.data.url,
+                                                                token: response.authResponse.accessToken
+                                                            }
+                                                            localStorage.setItem('_login_provider', 'facebook');
+                                                            observer.next(userDetails);
+                                                            observer.complete();
+                                                        }
+                                                    });
+                                                }
+                                            }, {scope: 'email'});
                                         }
                                     });
                                     break;
                     case "linkedin":
                                     IN.User.authorize(function(){
                                         IN.API.Raw("/people/~:(id,first-name,last-name,email-address,picture-url)").result(function(res){
-                                            let userDetails = {name: res.firstName + " " + res.lastName, email: res.emailAddress, uid: res.id, provider: "linkedIN", imageUrl: res.pictureUrl};
+                                            let userDetails = {name: res.firstName + " " + res.lastName, email: res.emailAddress, uid: res.id, provider: "linkedIN", image: res.pictureUrl};
                                             localStorage.setItem('_login_provider', 'linkedin');
                                             observer.next(userDetails);
                                             observer.complete();
@@ -109,5 +136,19 @@ export class AuthService {
                                 break;
             }
         })
+    }
+
+    private _fetchGoogleUserDetails(){
+        let currentUser = this.gauth.currentUser.get();
+        let profile = currentUser.getBasicProfile();
+        let idToken = currentUser.getAuthResponse().id_token;
+        return {
+            token: idToken,
+            uid: profile.getId(),
+            name: profile.getName(),
+            email: profile.getEmail(),
+            image: profile.getImageUrl(),
+            provider: "google"
+        };
     }
 }
