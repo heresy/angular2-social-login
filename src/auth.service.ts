@@ -17,7 +17,7 @@ export interface IProviders {
 @Injectable()
 export class AuthService {
     gauth: any;
-    
+
     login(provider: string): Observable<Object>{
         return Observable.create(
             (observer) => {
@@ -37,7 +37,7 @@ export class AuthService {
                                         observer.next(this._fetchGoogleUserDetails());
                                         observer.complete();
                                     }
-                                    
+
                                     break;
                     case "facebook":
                                     FB.getLoginStatus((response) => {
@@ -47,10 +47,10 @@ export class AuthService {
                                                     observer.error(res.error);
                                                 }else{
                                                     let userDetails = {
-                                                        name: res.name, 
-                                                        email: res.email, 
-                                                        uid: res.id, 
-                                                        provider: "facebook", 
+                                                        name: res.name,
+                                                        email: res.email,
+                                                        uid: res.id,
+                                                        provider: "facebook",
                                                         image: res.picture.data.url,
                                                         token: response.authResponse.accessToken
                                                     }
@@ -68,10 +68,10 @@ export class AuthService {
                                                             observer.error(res.error);
                                                         }else{
                                                             let userDetails = {
-                                                                name: res.name, 
-                                                                email: res.email, 
-                                                                uid: res.id, 
-                                                                provider: "facebook", 
+                                                                name: res.name,
+                                                                email: res.email,
+                                                                uid: res.id,
+                                                                provider: "facebook",
                                                                 image: res.picture.data.url,
                                                                 token: response.authResponse.accessToken
                                                             }
