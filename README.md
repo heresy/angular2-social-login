@@ -17,7 +17,7 @@ npm install angular2-social-login --save
 ### Adding angular2-social-login to your project
 Add `map` for **`angular2-social-login`** in your `systemjs.config`
 ```javascript
-'angular2-social-login': 'node_modules/angular2-social-login/lib/index.js'
+'angular2-social-login': 'node_modules/angular2-social-login/dist/bundles/angular2-social-login.min.js'
 ```
 ### Main module configuration
 ```javascript
@@ -42,7 +42,7 @@ let providers = {
 @NgModule({
   imports: [ 
               BrowserModule,
-              Angular2SocialLoginModule.initWithProviders(providers)
+              Angular2SocialLoginModule
           ],
   declarations: [AppComponent],
   bootstrap: [ AppComponent ]
@@ -50,6 +50,8 @@ let providers = {
 export class AppModule { 
   constructor(){}
 }
+
+Angular2SocialLoginModule.loadProvidersScripts(providers);
 ```
 ### Component configuration for `login()` and `logout()`:
 For `login(provider: string)` provider is required it should be anyone(case-sensitive) "facebook", "google", "linkedin" .
@@ -67,6 +69,7 @@ export class AppComponent implements OnDestroy {
   signIn(provider){
     this.sub = this._auth.login(provider).subscribe(
       (data) => {
+                  console.log(data);
                   //user data
                   //name, image, uid, provider, uid, email, token (returns tokenId for google, accessToken for Facebook, no token for linkedIn)
                 }

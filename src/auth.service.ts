@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs/Observable";
+import { Observer } from "rxjs/Observer";
 
 declare let gapi: any;
 declare let IN: any;
@@ -20,7 +21,7 @@ export class AuthService {
     
     login(provider: string): Observable<Object>{
         return Observable.create(
-            (observer) => {
+            (observer: Observer<Object>) => {
                 switch(provider){
                     case "google":
                                     if (typeof(this.gauth) == "undefined"){
@@ -40,9 +41,9 @@ export class AuthService {
                                     
                                     break;
                     case "facebook":
-                                    FB.getLoginStatus((response) => {
+                                    FB.getLoginStatus((response: any) => {
                                         if(response.status === "connected"){
-                                            FB.api('/me?fields=name,email,picture', (res) => {
+                                            FB.api('/me?fields=name,email,picture', (res: any) => {
                                                 if(!res || res.error){
                                                     observer.error(res.error);
                                                 }else{
@@ -61,9 +62,9 @@ export class AuthService {
                                             });
                                         }
                                         else{
-                                            FB.login((response) => {
+                                            FB.login((response: any) => {
                                                 if(response.status === "connected"){
-                                                    FB.api('/me?fields=name,email,picture', (res) => {
+                                                    FB.api('/me?fields=name,email,picture', (res: any) => {
                                                         if(!res || res.error){
                                                             observer.error(res.error);
                                                         }else{
@@ -87,7 +88,7 @@ export class AuthService {
                                     break;
                     case "linkedin":
                                     IN.User.authorize(function(){
-                                        IN.API.Raw("/people/~:(id,first-name,last-name,email-address,picture-url)").result(function(res){
+                                        IN.API.Raw("/people/~:(id,first-name,last-name,email-address,picture-url)").result(function(res: any){
                                             let userDetails = {name: res.firstName + " " + res.lastName, email: res.emailAddress, uid: res.id, provider: "linkedIN", image: res.pictureUrl};
                                             localStorage.setItem('_login_provider', 'linkedin');
                                             observer.next(userDetails);
@@ -102,7 +103,7 @@ export class AuthService {
 
     logout(): Observable<boolean>{
         let provider = localStorage.getItem("_login_provider");
-        return Observable.create((observer) => {
+        return Observable.create((observer: any) => {
             switch(provider){
                 case "google":
                                 let gElement = document.getElementById("gSignout");
@@ -110,7 +111,8 @@ export class AuthService {
                                 {
                                     gElement.remove();
                                 }
-                                var d = document, gSignout, ref = d.getElementsByTagName('script')[0];
+                                let d = document, gSignout;
+                                let ref: any = d.getElementsByTagName('script')[0];
                                 gSignout = d.createElement('script');
                                 gSignout.src = "https://accounts.google.com/Logout";
                                 gSignout.type = "text/javascript";
@@ -121,7 +123,7 @@ export class AuthService {
                                 ref.parentNode.insertBefore(gSignout, ref);
                                 break;
                 case "facebook":
-                                FB.logout(function(res){
+                                FB.logout(function(res: any){
                                     localStorage.removeItem('_login_provider');
                                     observer.next(true);
                                     observer.complete();

@@ -1,21 +1,22 @@
-"use strict";
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+'use strict';
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
+var _angular_core = require('@angular/core');
+var rxjs_Observable = require('rxjs/Observable');
+
+var __decorate$1 = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-var core_1 = require("@angular/core");
-var Observable_1 = require("rxjs/Observable");
-var AuthService = (function () {
+exports.AuthService = (function () {
     function AuthService() {
     }
     AuthService.prototype.login = function (provider) {
         var _this = this;
-        return Observable_1.Observable.create(function (observer) {
+        return rxjs_Observable.Observable.create(function (observer) {
             switch (provider) {
                 case "google":
                     if (typeof (_this.gauth) == "undefined") {
@@ -97,14 +98,15 @@ var AuthService = (function () {
     };
     AuthService.prototype.logout = function () {
         var provider = localStorage.getItem("_login_provider");
-        return Observable_1.Observable.create(function (observer) {
+        return rxjs_Observable.Observable.create(function (observer) {
             switch (provider) {
                 case "google":
                     var gElement = document.getElementById("gSignout");
                     if (typeof (gElement) != 'undefined' && gElement != null) {
                         gElement.remove();
                     }
-                    var d = document, gSignout, ref = d.getElementsByTagName('script')[0];
+                    var d = document, gSignout = void 0;
+                    var ref = d.getElementsByTagName('script')[0];
                     gSignout = d.createElement('script');
                     gSignout.src = "https://accounts.google.com/Logout";
                     gSignout.type = "text/javascript";
@@ -144,11 +146,72 @@ var AuthService = (function () {
             provider: "google"
         };
     };
-    AuthService = __decorate([
-        core_1.Injectable(), 
-        __metadata('design:paramtypes', [])
-    ], AuthService);
     return AuthService;
 }());
-exports.AuthService = AuthService;
-//# sourceMappingURL=auth.service.js.map
+exports.AuthService = __decorate$1([
+    _angular_core.Injectable()
+], exports.AuthService);
+
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+exports.Angular2SocialLoginModule = (function () {
+    function Angular2SocialLoginModule() {
+    }
+    Angular2SocialLoginModule.loadProvidersScripts = function (config) {
+        var loadProvidersScripts = {
+            google: function (info) {
+                var d = document, gJs, ref = d.getElementsByTagName('script')[0];
+                gJs = d.createElement('script');
+                gJs.async = true;
+                gJs.src = "//apis.google.com/js/platform.js";
+                gJs.onload = function () {
+                    gapi.load('auth2', function () {
+                        gapi.auth2.init({
+                            client_id: info["clientId"],
+                            scope: 'email'
+                        });
+                    });
+                };
+                ref.parentNode.insertBefore(gJs, ref);
+            },
+            linkedin: function (info) {
+                var lIN, d = document, ref = d.getElementsByTagName('script')[0];
+                lIN = d.createElement('script');
+                lIN.async = false;
+                lIN.src = "//platform.linkedin.com/in.js";
+                lIN.text = ("api_key: " + info["clientId"]).replace("\"", "");
+                ref.parentNode.insertBefore(lIN, ref);
+            },
+            facebook: function (info) {
+                var d = document, fbJs, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+                fbJs = d.createElement('script');
+                fbJs.id = id;
+                fbJs.async = true;
+                fbJs.src = "//connect.facebook.net/en_US/sdk.js";
+                fbJs.onload = function () {
+                    FB.init({
+                        appId: info["clientId"],
+                        status: true,
+                        cookie: true,
+                        xfbml: true,
+                        version: info["apiVersion"]
+                    });
+                };
+                ref.parentNode.insertBefore(fbJs, ref);
+            }
+        };
+        Object.keys(config).forEach(function (provider) {
+            loadProvidersScripts[provider](config[provider]);
+        });
+    };
+    return Angular2SocialLoginModule;
+}());
+exports.Angular2SocialLoginModule = __decorate([
+    _angular_core.NgModule({
+        providers: [exports.AuthService]
+    })
+], exports.Angular2SocialLoginModule);

@@ -1,4 +1,3 @@
-/// <reference types="core-js" />
 import { Observable } from "rxjs/Observable";
 export interface IProvider {
     clientId: string;
