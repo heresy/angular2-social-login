@@ -1,9 +1,8 @@
-'use strict';
-
-Object.defineProperty(exports, '__esModule', { value: true });
-
-var _angular_core = require('@angular/core');
-var rxjs_Observable = require('rxjs/Observable');
+(function (global, factory) {
+	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('rxjs/Observable')) :
+	typeof define === 'function' && define.amd ? define(['exports', '@angular/core', 'rxjs/Observable'], factory) :
+	(factory((global.ng = global.ng || {}, global.ng.angular2SocialLogin = global.ng.angular2SocialLogin || {}),global.ng.core,global.Rx));
+}(this, (function (exports,_angular_core,rxjs_Observable) { 'use strict';
 
 var __decorate$1 = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -215,3 +214,7 @@ exports.Angular2SocialLoginModule = __decorate([
         providers: [exports.AuthService]
     })
 ], exports.Angular2SocialLoginModule);
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
+})));

@@ -1,6 +1,6 @@
 {
   "name": "angular2-social-login",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Simple client side social authentication for Angular2 application.",
   "main": "dist/bundles/angular2-social-login.min.js",
   "module": "dist/index.js",
@@ -12,8 +12,8 @@
     "build": "npm run transpile && npm run package && npm run minify"
   },
   "peerDependencies": {
-    "@angular/core": "~2.4.0",
-    "@angular/http": "~2.4.0"
+    "@angular/core": "2.x || 4.x",
+    "rxjs": "^5.0.1"
   },
   "devDependencies": {
     "@angular/common": "~2.4.0",
@@ -31,8 +31,11 @@
   },
   "keywords": [
     "angular2",
+    "angular",
+    "angular 4",
     "authentication",
     "social login",
+    "angular4 social login",
     "angular2 social login"
   ],
   "contributors": [
