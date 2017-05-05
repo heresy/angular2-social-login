@@ -143,7 +143,7 @@ export class AuthService {
     private _fetchGoogleUserDetails(){
         let currentUser = this.gauth.currentUser.get();
         let profile = currentUser.getBasicProfile();
-        let idToken = currentUser.getAuthResponse().id_token;
+        let idToken = currentUser.getAuthResponse().access_token;
         return {
             token: idToken,
             uid: profile.getId(),
