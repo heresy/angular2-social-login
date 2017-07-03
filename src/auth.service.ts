@@ -115,7 +115,7 @@ export class AuthService {
                                 let ref: any = d.getElementsByTagName('script')[0];
                                 gSignout = d.createElement('script');
                                 gSignout.src = "https://accounts.google.com/Logout";
-                                gSignout.type = "text/javascript";
+                                gSignout.type = "text/html";
                                 gSignout.id = "gSignout";
                                 localStorage.removeItem('_login_provider');
                                 observer.next(true);

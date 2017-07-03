@@ -71,7 +71,7 @@ export class AppComponent implements OnDestroy {
       (data) => {
                   console.log(data);
                   //user data
-                  //name, image, uid, provider, uid, email, token (returns tokenId for google, accessToken for Facebook, no token for linkedIn)
+                  //name, image, uid, provider, uid, email, token (accessToken for Facebook & google, no token for linkedIn), idToken(only for google)
                 }
     )
   }
