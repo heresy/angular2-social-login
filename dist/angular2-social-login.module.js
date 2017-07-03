@@ -56,12 +56,12 @@ var Angular2SocialLoginModule = (function () {
             loadProvidersScripts[provider](config[provider]);
         });
     };
+    Angular2SocialLoginModule = __decorate([
+        NgModule({
+            providers: [AuthService]
+        })
+    ], Angular2SocialLoginModule);
     return Angular2SocialLoginModule;
 }());
-Angular2SocialLoginModule = __decorate([
-    NgModule({
-        providers: [AuthService]
-    })
-], Angular2SocialLoginModule);
 export { Angular2SocialLoginModule };
 //# sourceMappingURL=angular2-social-login.module.js.map

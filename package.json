@@ -1,6 +1,6 @@
 {
   "name": "angular2-social-login",
-  "version": "3.0.1",
+  "version": "3.1.0",
   "description": "Simple client side social authentication for Angular2 application.",
   "main": "dist/bundles/angular2-social-login.min.js",
   "module": "dist/index.js",

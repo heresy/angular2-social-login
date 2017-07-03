@@ -10,7 +10,7 @@ var __decorate$1 = (undefined && undefined.__decorate) || function (decorators, 
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-exports.AuthService = (function () {
+var AuthService = (function () {
     function AuthService() {
     }
     AuthService.prototype.login = function (provider) {
@@ -78,7 +78,7 @@ exports.AuthService = (function () {
                                         }
                                     });
                                 }
-                            }, { scope: 'email' });
+                            }, { scope: 'email', auth_type: "rerequest" });
                         }
                     });
                     break;
@@ -136,8 +136,10 @@ exports.AuthService = (function () {
         var currentUser = this.gauth.currentUser.get();
         var profile = currentUser.getBasicProfile();
         var idToken = currentUser.getAuthResponse().id_token;
+        var accessToken = currentUser.getAuthResponse().access_token;
         return {
-            token: idToken,
+            token: accessToken,
+            idToken: idToken,
             uid: profile.getId(),
             name: profile.getName(),
             email: profile.getEmail(),
@@ -145,11 +147,11 @@ exports.AuthService = (function () {
             provider: "google"
         };
     };
+    AuthService = __decorate$1([
+        _angular_core.Injectable()
+    ], AuthService);
     return AuthService;
 }());
-exports.AuthService = __decorate$1([
-    _angular_core.Injectable()
-], exports.AuthService);
 
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -157,7 +159,7 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-exports.Angular2SocialLoginModule = (function () {
+var Angular2SocialLoginModule = (function () {
     function Angular2SocialLoginModule() {
     }
     Angular2SocialLoginModule.loadProvidersScripts = function (config) {
@@ -207,13 +209,16 @@ exports.Angular2SocialLoginModule = (function () {
             loadProvidersScripts[provider](config[provider]);
         });
     };
+    Angular2SocialLoginModule = __decorate([
+        _angular_core.NgModule({
+            providers: [AuthService]
+        })
+    ], Angular2SocialLoginModule);
     return Angular2SocialLoginModule;
 }());
-exports.Angular2SocialLoginModule = __decorate([
-    _angular_core.NgModule({
-        providers: [exports.AuthService]
-    })
-], exports.Angular2SocialLoginModule);
+
+exports.Angular2SocialLoginModule = Angular2SocialLoginModule;
+exports.AuthService = AuthService;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
