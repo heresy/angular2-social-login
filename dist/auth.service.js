@@ -6,7 +6,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs/Observable";
-var AuthService = (function () {
+var AuthService = /** @class */ (function () {
     function AuthService() {
     }
     AuthService.prototype.login = function (provider) {
