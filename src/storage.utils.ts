@@ -61,4 +61,4 @@ export const getRetrieveMethod = () => {
 
 export const saveToStorage = getSavingMethod();
 export const loadFromStorage = getRetrieveMethod();
-export const DeleteFromStorage = getDeleteMethod();
+export const deleteFromStorage = getDeleteMethod();

@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs/Observable";
 import { Observer } from "rxjs/Observer";
-import { saveToStorage, loadFromStorage, DeleteFromStorage} from "storage.utils";
+import { saveToStorage, loadFromStorage, deleteFromStorage} from "storage.utils";
 
 declare let gapi: any;
 declare let IN: any;
@@ -118,21 +118,21 @@ export class AuthService {
                                 gSignout.src = "https://accounts.google.com/Logout";
                                 gSignout.type = "text/html";
                                 gSignout.id = "gSignout";
-                                DeleteFromStorage('_login_provider');
+                                deleteFromStorage('_login_provider');
                                 observer.next(true);
                                 observer.complete();
                                 ref.parentNode.insertBefore(gSignout, ref);
                                 break;
                 case "facebook":
                                 FB.logout(function(res: any){
-                                    DeleteFromStorage('_login_provider');
+                                    deleteFromStorage('_login_provider');
                                     observer.next(true);
                                     observer.complete();
                                 });
                                 break;
                 case "linkedin":
                                 IN.User.logout(function(){
-                                    DeleteFromStorage('_login_provider');
+                                    deleteFromStorage('_login_provider');
                                     observer.next(true);
                                     observer.complete();
                   				}, {});
