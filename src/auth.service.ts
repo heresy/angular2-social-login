@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs/Observable";
 import { Observer } from "rxjs/Observer";
+import { saveToStorage, loadFromStorage, DeleteFromStorage} from "storage.utils";
 
 declare let gapi: any;
 declare let IN: any;
@@ -29,12 +30,12 @@ export class AuthService {
                                     }
                                     if(!this.gauth.isSignedIn.get()){
                                         this.gauth.signIn().then(() => {
-                                            localStorage.setItem('_login_provider', 'google');
+                                            saveToStorage('_login_provider', 'google');
                                             observer.next(this._fetchGoogleUserDetails());
                                             observer.complete();
                                         });
                                     }else{
-                                        localStorage.setItem('_login_provider', 'google');
+                                        saveToStorage('_login_provider', 'google');
                                         observer.next(this._fetchGoogleUserDetails());
                                         observer.complete();
                                     }
@@ -55,7 +56,7 @@ export class AuthService {
                                                         image: res.picture.data.url,
                                                         token: response.authResponse.accessToken
                                                     }
-                                                    localStorage.setItem('_login_provider', 'facebook');
+                                                    saveToStorage('_login_provider', 'facebook');
                                                     observer.next(userDetails);
                                                     observer.complete();
                                                 }
@@ -76,7 +77,7 @@ export class AuthService {
                                                                 image: res.picture.data.url,
                                                                 token: response.authResponse.accessToken
                                                             }
-                                                            localStorage.setItem('_login_provider', 'facebook');
+                                                            saveToStorage('_login_provider', 'facebook');
                                                             observer.next(userDetails);
                                                             observer.complete();
                                                         }
@@ -90,7 +91,7 @@ export class AuthService {
                                     IN.User.authorize(function(){
                                         IN.API.Raw("/people/~:(id,first-name,last-name,email-address,picture-url)").result(function(res: any){
                                             let userDetails = {name: res.firstName + " " + res.lastName, email: res.emailAddress, uid: res.id, provider: "linkedIN", image: res.pictureUrl};
-                                            localStorage.setItem('_login_provider', 'linkedin');
+                                            saveToStorage('_login_provider', 'linkedin');
                                             observer.next(userDetails);
                                             observer.complete();
                                         });
@@ -102,7 +103,7 @@ export class AuthService {
     }
 
     logout(): Observable<boolean>{
-        let provider = localStorage.getItem("_login_provider");
+        let provider = loadFromStorage("_login_provider");
         return Observable.create((observer: any) => {
             switch(provider){
                 case "google":
@@ -117,21 +118,21 @@ export class AuthService {
                                 gSignout.src = "https://accounts.google.com/Logout";
                                 gSignout.type = "text/html";
                                 gSignout.id = "gSignout";
-                                localStorage.removeItem('_login_provider');
+                                DeleteFromStorage('_login_provider');
                                 observer.next(true);
                                 observer.complete();
                                 ref.parentNode.insertBefore(gSignout, ref);
                                 break;
                 case "facebook":
                                 FB.logout(function(res: any){
-                                    localStorage.removeItem('_login_provider');
+                                    DeleteFromStorage('_login_provider');
                                     observer.next(true);
                                     observer.complete();
                                 });
                                 break;
                 case "linkedin":
                                 IN.User.logout(function(){
-                                    localStorage.removeItem('_login_provider');
+                                    DeleteFromStorage('_login_provider');
                                     observer.next(true);
                                     observer.complete();
                   				}, {});
